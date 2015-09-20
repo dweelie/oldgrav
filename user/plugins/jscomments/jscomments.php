@@ -1,21 +1,35 @@
-<?php namespace Grav\Plugin;
+<?php
 
+namespace Grav\Plugin;
+
+use Grav\Common\Data\Blueprints;
 use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
-use Grav\Common\Data\Data;
+use RocketTheme\Toolbox\Event\Event;
 
+/**
+ * Class JSCommentsPlugin
+ * @package Grav\Plugin
+ */
 class JSCommentsPlugin extends Plugin
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0]
+            'onPluginsInitialized'  => ['onPluginsInitialized', 0],
+            'onBlueprintCreated'    => ['onBlueprintCreated', 0]
         ];
     }
 
+    /**
+     *
+     */
     public function onPluginsInitialized()
     {
-        if ($this->isAdmin()) {
+        if (true === $this->isAdmin()) {
             $this->active = false;
             return;
         }
@@ -26,100 +40,173 @@ class JSCommentsPlugin extends Plugin
         ]);
     }
 
+    /**
+     *
+     */
     public function onTwigInitialized()
     {
         $this->grav['twig']->twig()->addFunction(
-            new \Twig_SimpleFunction('jscomments', [$this, 'jscommentsFunction'], ['is_safe' => ['html']])
+            new \Twig_SimpleFunction('jscomments', [$this, 'twigFunctionJSComments'], ['is_safe' => ['html']])
         );
 
         $this->grav['twig']->twig()->addFunction(
-            new \Twig_SimpleFunction('jscomments_count', [$this, 'jscommentsCountFunction'], ['is_safe' => ['html']])
+            new \Twig_SimpleFunction('jscomments_count', [$this, 'twigFunctionJSCommentsCount'], ['is_safe' => ['html']])
         );
 
         $this->grav['twig']->twig()->addFunction(
-            new \Twig_SimpleFunction('jscomments_validate_provider', [$this, 'jscommentsValidateProviderFunction'], ['is_safe' => ['html']])
+            new \Twig_SimpleFunction('jscomments_validate_provider', [$this, 'twigFunctionJSCommentsValidateProvider'], ['is_safe' => ['html']])
         );
     }
 
+    /**
+     *
+     */
     public function onTwigTemplatePaths()
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
 
-    public function jscommentsFunction($provider = '', $params = [])
+    /**
+     * @param Event $event
+     */
+    public function onBlueprintCreated(Event $event)
+    {
+        static $inEvent = false;
+
+        /** @var \Grav\Common\Data\Blueprint $blueprint */
+        $blueprint = $event['blueprint'];
+
+        if (false === $inEvent and $blueprint->get('form.fields.tabs')) {
+            $inEvent = true;
+            $blueprints = new Blueprints(__DIR__ . '/blueprints/');
+            $extends = $blueprints->get('jscomments');
+            $blueprint->extend($extends, true);
+            $inEvent = false;
+        }
+    }
+
+    /**
+     * @param null|string $provider
+     * @param array $params
+     * @return string
+     */
+    public function twigFunctionJSComments($provider = null, $params = [])
     {
         // Load page object.
         $page = $this->grav['page'];
 
-        $this->mergePluginConfig($page, $provider, $params);
-
-        if (!$this->validateProvider($this->config->get('provider'))) {
-            return;
+        // Validate presence of header value
+        if (false === $this->validateHeader($page->header()) and null === $provider) {
+            return '';
         }
 
-        $template_file = 'plugins/jscomments/' . $this->config->get('provider') . '.html.twig';
-        $template_vars = $this->config->get('providers.' . $this->config->get('provider'));
+        // Load config.
+        $config = $this->mergeConfig($page);
 
-        return $this->grav['twig']->twig()->render($template_file, $template_vars);
+        $provider = (null === $provider) ? $config->get('provider') : $provider;
+
+        if (false === $this->validateProvider($provider, $page)) {
+            return '';
+        }
+
+        $template_file = $this->getTemplatePath($provider);
+        $template_vars = array_merge($this->getProviderOptions($provider), $params, [
+            'page' => $page
+        ]);
+
+        return $this->grav['twig']->processTemplate($template_file, $template_vars);
     }
 
-    public function jscommentsCountFunction($shortname = '')
+    /**
+     * @param null $shortname
+     * @return string
+     */
+    public function twigFunctionJSCommentsCount($shortname = null)
     {
         $page = $this->grav['page'];
 
-        if ($shortname) {
-            $this->mergePluginConfig($page, 'disqus', ['shortname' => $shortname]);
-        } else {
-            $this->mergePluginConfig($page);
+        // Validate presence of header value
+        if (false === $this->validateHeader($page->header())) {
+            return '';
         }
 
-        if (!$this->validateProvider($this->config->get('provider'))) {
-            return;
+        // Merge site config with page config.
+        $config = $this->mergeConfig($page);
+
+        // Break if the provider is not disqus
+        if ('disqus' !== $config->get('provider')) {
+            return '';
         }
 
-        if ('disqus' != $this->config->get('provider')) {
-            return;
-        }
+        $shortname = (null === $shortname) ? $config->get('providers.disqus.shortname') : $shortname;
 
-        $template_file = 'plugins/jscomments/disqus_count.html.twig';
+        $template_file = $this->getTemplatePath('disqus_count');
         $template_vars = [
-            'shortname' => $this->config->get('providers.disqus.shortname')
+            'shortname' => $shortname
         ];
 
-        $output = $this->grav['twig']->twig()->render($template_file, $template_vars);
+        $output = $this->grav['twig']->processTemplate($template_file, $template_vars);
 
         return $output;
     }
 
-    public function jscommentsValidateProviderFunction($provider)
+    /**
+     * @param string $provider
+     * @return bool
+     */
+    public function twigFunctionJSCommentsValidateProvider($provider)
     {
-        return $this->validateProvider($provider);
+        // Validate presence of header value
+        if (false === $this->validateHeader($this->grav['page']->header())) {
+            return '';
+        }
+
+        return $this->validateProvider($provider, $this->grav['page']);
     }
 
-    private function validateProvider($provider)
+    /**
+     * @param object $header
+     * @return bool
+     */
+    private function validateHeader($header)
     {
-        if (!$this->config->get('providers')) {
-            $page = $this->grav['page'];
-            $this->mergePluginConfig($page);
-        }
-
-        return (array_key_exists($provider, $this->config->get('providers'))) ? true : false;
+        return isset($header->jscomments);
     }
 
-    private function mergePluginConfig(Page $page, $provider = '', $params = [])
+    /**
+     * @param string $provider
+     * @param Page $page
+     * @return bool
+     */
+    private function validateProvider($provider, Page $page)
     {
-        $this->config = new Data((array) $this->grav['config']->get('plugins.jscomments'));
+        $config = $this->mergeConfig($page);
 
-        if (isset($page->header()->jscomments)) {
-            if (is_array($page->header()->jscomments)) {
-                $this->config = new Data(array_replace_recursive($this->config->toArray(), $page->header()->jscomments));
-            } else {
-                $this->config->set('enabled', $page->header()->jscomments);
-            }
-        }
+        return array_key_exists($provider, $config->get('providers'));
+    }
 
-        if ($provider and $this->validateProvider($provider)) {
-            $this->config->set('providers.' . $provider, array_replace_recursive($this->config->get('providers.' . $provider), $params));
-        }
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function getTemplatePath($name)
+    {
+        return sprintf('plugins/jscomments/%s.html.twig', $name);
+    }
+
+    /**
+     * @param string $provider
+     * @param Page|null $page
+     * @return mixed
+     */
+    private function getProviderOptions($provider, Page $page = null)
+    {
+        $provider_key = sprintf('providers.%s', $provider);
+
+        $page = (null === $page) ? $this->grav['page'] : $page;
+
+        $config = $this->mergeConfig($page);
+
+        return $config->get($provider_key);
     }
 }

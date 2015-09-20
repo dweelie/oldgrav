@@ -1,10 +1,9 @@
-enabled: false
-
-provider: ""
+enabled: true
 
 providers:
   disqus:
     shortname: ""
+    default_lang: en
 
   intensedebate:
     acct: ""
@@ -12,8 +11,9 @@ providers:
   facebook:
     appId: ""
     lang: "en_US"
-    numposts: 5
+    num_posts: 5
     colorscheme: "light"
+    order_by: social
     width: "100%"
 
   muut:

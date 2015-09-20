@@ -1,4 +1,4 @@
-enabled: false                  # set to false to disable this plugin completely
+enabled: true                   # set to false to disable this plugin completely
 limit: 5                        # the number of related pages to display
 show_score: true                # toggle to determine if scores should be displayed in output
 score_threshold: 20             # minimum score needed to show up in the list
