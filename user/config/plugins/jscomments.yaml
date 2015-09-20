@@ -1,7 +1,0 @@
-enabled: true
-
-provider: disqus
-
-providers:
-  disqus:
-    shortname: gravityfreesummer
