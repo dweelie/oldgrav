@@ -12,15 +12,15 @@
 
 	// scroll based changes
 	&.scrolled {
-		height: $header-height;
+		height: $header-height - 2rem;
 		background-color: rgba(255,255,255,0.90) !important;
 		box-shadow: 0 0.05rem 1rem rgba(0,0,0, 0.15) !important;
-
+	// mobile only header logo customization @ line 21
 		#logo h3 {
 			color: $core-text !important;
-			font-size: 1.25rem !important;
+			@include breakpoint(mobile-only) { font-size: 20px; }
+			font-size: 1.0rem !important;
 		}
-		@include breakpoint(mobile-only) { font-size: 20px; }
 		#logo a, #navbar span {
 			color: $core-text !important;
 		}
@@ -39,12 +39,13 @@
 	> .grid, #logo, #navbar {
 		height: 100%;
 	}
-
+	// mobile only header logo customization @ line 55
 	#logo {
 		float: left;
 		h3 {
+			@extend .default-animation;
 			@extend %vertical-align;
-			font-size: 1.25rem;
+			font-size: 2rem;
 			line-height: 2rem;
 			margin: 0;
 			text-transform: uppercase;
