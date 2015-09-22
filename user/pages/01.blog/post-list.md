@@ -1,5 +1,5 @@
 ---
-title: Home
+title: home
 class: home
 
 sitemap:
@@ -18,4 +18,3 @@ feed:
     description: Feed Title
     limit: 10
 ---
-
