@@ -4,7 +4,7 @@ author: H
 title: Gravity Free Summer
 title_header: false
 home_profile: true
-infinite_scroll: true
+infinite_scroll: false
 analytics: UA-YOURCODE
 social:
     twitter: @infinitybeach

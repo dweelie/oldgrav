@@ -26,13 +26,13 @@
     {% endblock %}
 
     {% block content %}
-    <ul id="post-list" class="infinite-scroll">
+    <ul id="post-list">
         {% for post in collection %}
         {% include 'partials/post-item.html.twig' %}
         {% endfor %}
         {% if config.plugins.pagination.enabled and collection.params.pagination %}
-            {% include 'partials/load-more.html.twig' %}
-        {% endif %}
+        {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+    {% endif %}
     </ul>
 
     {% endblock %}
