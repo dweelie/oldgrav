@@ -1,7 +1,7 @@
 ---
 title: password to yo' mother
 slug: password
-date: 09/19/2015
+date: 12:00 19.09.2015
 taxonomy:
     category: blog
     tag: [thoughts]
