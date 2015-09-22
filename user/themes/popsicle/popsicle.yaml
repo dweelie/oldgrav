@@ -1,0 +1,20 @@
+enabled: true
+default_lang: en
+author: H
+title: Gravity Free Summer
+title_header: false
+home_profile: true
+infinite_scroll: true
+analytics: UA-YOURCODE
+social:
+    twitter: @infinitybeach
+    facebook: gravityfreesummer
+
+streams:
+ schemes:
+   theme:
+     type: ReadOnlyStream
+     prefixes:
+       '':
+         - user/themes/popsicle
+         - user/themes/cacti

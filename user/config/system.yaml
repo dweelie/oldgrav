@@ -4,7 +4,7 @@ home:
   alias: '/blog'
 
 pages:
-  theme: infinitybeach
+  theme: popsicle
   markdown_extra: false
   process:
     markdown: true
