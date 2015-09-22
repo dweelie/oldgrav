@@ -3,11 +3,11 @@
     {% set collection = page.collection %}
     {% set pagination = collection.params.pagination %}
 
-    
+
 
     {% block javascripts %}
         {{ parent() }}
-        {% do assets.addInlineJs(jscroll_init) %}
+        
     {% endblock %}
 
     {% block header %}
