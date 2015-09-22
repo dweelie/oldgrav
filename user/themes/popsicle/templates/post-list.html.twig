@@ -3,14 +3,7 @@
     {% set collection = page.collection %}
     {% set pagination = collection.params.pagination %}
 
-    {% set jscroll_init %}
-    $(document).ready(function() {
-        $('.infinite-scroll').jscroll({
-        autoTrigger: true,
-        nextSelector: '[rel="next"]'
-        });
-    });
-    {% endset %}
+    
 
     {% block javascripts %}
         {{ parent() }}
