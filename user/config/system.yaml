@@ -1,4 +1,4 @@
-absolute_urls: true
+absolute_urls: false
 
 home:
   alias: '/blog'
