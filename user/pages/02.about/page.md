@@ -4,7 +4,7 @@ class: home
 profile: false
 ---
 
-![](/images/bandphoto.jpg?cropResize=500,500)  
+![](/images/bandphoto.jpg)  
 
 Gravity Free Summer is a band formed in Dallas, Texas in 2013. The band's lineup consists of founder Henry Bennett (guitar, vocals) and Stacy Bennett (drums, vocals). Prior to the band's formation, Gravity Free Summer was a solo project with limited single releases. After recruiting Stacy Bennett on drums, Henry Bennett finished production of their debut double album She Will Trip into Pastels Expanding.
 
