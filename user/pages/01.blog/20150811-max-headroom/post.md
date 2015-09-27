@@ -7,6 +7,8 @@ taxonomy:
     tag: [recording, watch]
 ---
 
+![](../20150811-max-headroom/max.jpg)
+
 Last week I recorded vocal takes for a couple of songs. Since I don't have luxuries like a vocal booth, I usually set the mic up wherever in my bedroom, press the record button, and hope for the best. With my newest recordings I tried something a little different.
 
 ===

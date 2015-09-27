@@ -7,6 +7,8 @@ taxonomy:
     tag: [listen]
 ---
 
+![](../hello-world/flower.jpeg)
+
 Hello, world. Welcome to the new **gravityfreesummer.com**!
 
 ===

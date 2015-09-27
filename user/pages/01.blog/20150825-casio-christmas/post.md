@@ -7,6 +7,8 @@ taxonomy:
     tag: [listen, watch]
 ---
 
+![](../casio-christmas/casio.jpg)
+
 On Christmas of 1989 I received a ![Casio SK-1](http://www.vintagesynth.com/casio/sk1.php). This keyboard is renowned as one of the first consumer grade synthesizers with the ability to record audio samples. At the time, I didn't know what I had since I was only a kid. Although it was more like a toy, this instrument introduced me to the world of creating music.
 
 ===

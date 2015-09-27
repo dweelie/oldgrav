@@ -7,6 +7,8 @@ taxonomy:
     tag: [recording]
 ---
 
+![](../20150728-microphone/microphone.jpg)
+
 We are knee deep into recording our 4th album, folks. Making an album is an amazing and frustrating process. And it's a nice excuse to buy a new piece of musical gear. I give you the SM57 from Shure, gentlepeople!
 
 ===

@@ -7,6 +7,8 @@ taxonomy:
     tag: [thoughts]
 ---
 
+![](../bbs-lane/armageddonbbs.jpg)
+
 The internet we know today used to look a lot different. Before there was social media, blogging, or the world wide web, there was the almighty [Bulletin Board System](https://en.wikipedia.org/wiki/Bulletin_board_system). Its heyday was in the 80s and early 90s, long before most of us discovered the internet, yet the BBS party rages on in 2015. Fascinated by all things underground and DIY, I fired up a telnet terminal and called some boards.
 
 ===

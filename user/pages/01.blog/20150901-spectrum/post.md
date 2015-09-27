@@ -7,6 +7,8 @@ taxonomy:
     tag: [thoughts, listen]
 ---
 
+![](../20150901-spectrum/solidspace.jpg)
+
 This is going to be a short and sweet update. I debated even writing an entry this week, but I like coming back here. I like having a task to do once a week and sticking to it.
 
 ===
