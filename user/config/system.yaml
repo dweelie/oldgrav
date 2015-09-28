@@ -1,10 +1,10 @@
-absolute_urls: true
+absolute_urls: false
 
 home:
   alias: '/blog'
 
 pages:
-  theme: infinitybeach
+  theme: popsicle
   markdown_extra: false
   process:
     markdown: true
@@ -27,7 +27,7 @@ twig:
   autoescape: false
 
 assets:
-  css_pipeline: false
+  css_pipeline: true
   css_minify: true
   css_rewrite: true
   js_pipeline: true
