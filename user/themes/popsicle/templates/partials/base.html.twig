@@ -10,7 +10,7 @@
 
   <title>{% if header.title %}{{ header.title|e('html') }} - {% endif %}{{ 'SITE.TITLE'|t|e('html') }}</title>
   <link rel="shortcut icon" href="{{ url('theme://images/favicon.ico') }}" />
-  <link rel="alternate" type="application/rss+xml" title="My Blog" href="/rss.xml">
+  <link rel="alternate" type="application/rss+xml" title="gravity free summer" href="/rss.xml">
   {% block stylesheets %}
     {% do assets.addCss('theme://css/style.css',100) %}
   {% endblock %}
